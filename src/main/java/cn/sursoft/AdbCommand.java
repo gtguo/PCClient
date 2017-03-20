@@ -13,11 +13,11 @@ import java.util.HashMap;
 
 public class AdbCommand {
     private static final String TAG = "Sursoft AdbCommand ";
-    private HashMap<String, String> devMap = new HashMap<>();
+    private static HashMap<String, String> devMap = new HashMap<>();
     private HashMap<String, String> batteryStatusMap = new HashMap<>();
    // private BatteryStatus bs = new BatteryStatus();
 
-    private void getDevicesList(){
+    private static void getDevicesList(){
         BufferedReader inputStream = null;
         try{
             Process process = Runtime.getRuntime().exec("adb devices");
@@ -44,7 +44,7 @@ public class AdbCommand {
         }
     }
 
-    public HashMap getDevID(){
+    public static HashMap getDevID(){
         getDevicesList();
         try{
             Thread.sleep(500);
@@ -56,6 +56,14 @@ public class AdbCommand {
         }else{
             System.out.println(TAG+"There is no device connected USB. Please check it!");
             return null;
+        }
+    }
+
+    public static void setDevIdStatus(String serial ,String status){
+        if(devMap.containsKey(serial)){
+           devMap.replace(serial,status) ;
+        }else {
+            System.out.println(TAG+"Dev id is not existed! please refresh!");
         }
     }
 
@@ -204,7 +212,7 @@ public class AdbCommand {
             }
         }).start();
     }
-    private void readLine(final BufferedReader br){
+    private static void readLine(final BufferedReader br){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -222,7 +230,8 @@ public class AdbCommand {
                                     System.out.println(TAG + "adb devices info was invilid! ");
                                     continue;
                                 } else {
-                                    devMap.put(strs[0].toString(), strs[1].toString());
+                                    if(strs[1].toString().equals("device"))
+                                    devMap.put(strs[0].toString(), "idle");
                                 }
                             }
                         }
