@@ -16,13 +16,18 @@ public abstract class ExecTestCase extends Observable implements ExecTestCaseHan
     private String scriptStatus;
     private String serial;
 
+    public abstract void createTestReport();
+    public abstract void createTestLog();
+
+
     public ExecTestCase(String userId,String taskName,GregorianCalendar calendar,String serial){
         this.userId = userId;
         this.taskName = taskName;
         this.calendar = calendar;
         this.serial = serial;
+        generalTestReportLogFile();
     }
-    @Override
+
     public void setExecTestStatus(String status){
         if(!status.equals(getScriptStatus())){
             this.scriptStatus = status;
@@ -30,10 +35,10 @@ public abstract class ExecTestCase extends Observable implements ExecTestCaseHan
             notifyObservers();
         }
         this.scriptStatus = status;
+        System.out.println(TAG+"setExecTestStatus "+status);
     }
 
-    @Override
-    public void generalTestReportLogFile(){
+    private void generalTestReportLogFile(){
         File fileReport = null;
         File filelog = null;
         String osName = System.getProperties().getProperty("os.name");
@@ -41,7 +46,7 @@ public abstract class ExecTestCase extends Observable implements ExecTestCaseHan
             //windows System
             fileReport = new File("d:\\Report\\"+getUserId()+"\\"+getTaskName()
                     +"\\"+calendar.get(GregorianCalendar.YEAR)
-                    +calendar.get(GregorianCalendar.MONTH)
+                    +(calendar.get(GregorianCalendar.MONTH)+1)
                     +calendar.get(GregorianCalendar.DAY_OF_MONTH)
                     +calendar.get(GregorianCalendar.HOUR)
                     +calendar.get(GregorianCalendar.MINUTE));
@@ -54,7 +59,7 @@ public abstract class ExecTestCase extends Observable implements ExecTestCaseHan
                     +calendar.get(GregorianCalendar.HOUR)
                     +calendar.get(GregorianCalendar.MINUTE));
             filelog.mkdirs();
-
+            System.out.println(TAG+"generalTestReportLogFile");
             /**********
             System.out.println(TAG+file.getAbsolutePath());
             File f = new File(file.getAbsolutePath()+"\\"+"report.txt");

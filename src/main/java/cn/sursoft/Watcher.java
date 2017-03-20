@@ -8,6 +8,7 @@ import java.util.Observer;
  */
 
 public class Watcher<T> implements Observer {
+    private Object classWatcher = null;
     public Watcher(Observable o){o.addObserver(this);}
     @Override
     public void update(Observable o, Object arg){
@@ -39,6 +40,10 @@ public class Watcher<T> implements Observer {
                     +" state:" +ps.getPhoneState()
                     +" Manual:"+ps.getPhoneManual()
                     +" Operator:"+ps.getPhoneOperator());
+        }else if(o.getClass().toString().equals("class cn.sursoft.SursoftToolSrrStatus")){
+            SursoftToolSrrStatus srr = (SursoftToolSrrStatus)o;
+            System.out.println("SursoftToolSrrStatusWatcher "
+                    +" status:" +srr.getSursoftToolSrrStatus());
         }else{
             System.out.println("Watcher is invalid! ");
         }

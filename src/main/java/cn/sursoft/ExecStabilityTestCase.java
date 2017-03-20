@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Observable;
 
 public class ExecStabilityTestCase extends ExecTestCase{
-    public final static String TAG = "Sursoft ExecTestCase ";
+    public final static String TAG = "Sursoft ExecStabilityTestCase ";
 
     public ExecStabilityTestCase(String userId, String taskName, GregorianCalendar calendar, String serial){
         super(userId,taskName,calendar,serial);
@@ -54,29 +54,33 @@ public class ExecStabilityTestCase extends ExecTestCase{
 
     //run script
     @Override
-    public void execTestCaseScript(String devSerial,String scriptPathName){
-        BufferedReader inputStream = null;
+    public void execTestCaseScript(String devSerial,String scriptPathName,int type){
+        //BufferedReader inputStream = null;
         //PythonInterpreter.initialize(null,null,devSerial[]);
         //PythonInterpreter pythonInterpreter = new PythonInterpreter();
         //pythonInterpreter.exec(scriptPathName);
         //pythonInterpreter.
-        try {
-            Process process = Runtime.getRuntime().exec("Python "+devSerial+ scriptPathName);
-            inputStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            readLine(inputStream);
-        }catch (IOException e){
-            e.printStackTrace();
+       // try {
+        //    Process process = Runtime.getRuntime().exec("Python "+devSerial+ scriptPathName);
+       //     inputStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        //    readLine(inputStream);
+       // }catch (IOException e){
+       //     e.printStackTrace();
+       // }
+        switch (type){
+            case 0://filepath
+                break;
+            case 1://URl
+                break;
+            default:
+                //nothing
         }
-    }
-
-    //general report
-    public void generalTestReport(){
-        //run script to general report
+        System.out.println(TAG +"execTestCaseScript");
     }
 
     //handle error event
     public void errEventHandler(){
-
+        System.out.println(TAG +"errEventHandler");
     }
 
     private void readLine(final BufferedReader br){
@@ -102,21 +106,23 @@ public class ExecStabilityTestCase extends ExecTestCase{
 
     @Override
     public void createTestReport(){
-
+        System.out.println(TAG +"createTestReport");
     }
 
     @Override
     public void createTestLog(){
-
+        System.out.println(TAG +"createTestLog");
     }
 
     @Override
     public File getTestReport(){
+        System.out.println(TAG +"getTestReport");
         return new File("");
     }
 
     @Override
     public File getTestLog(){
+        System.out.println(TAG +"getTestLog");
         return new File("");
     }
 }

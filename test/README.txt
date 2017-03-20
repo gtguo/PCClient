@@ -26,3 +26,15 @@ public DevSdcardStatus getSdcardStatus获取手机SDcard是否mounted
 
 运行MyClass.java需要确保手机连上adb，并安装了STFService.apk，注意：Myclass.java默认的dev serial是0123456789ABCDEF，需要自行设置
 
+
+v2.0。0 
+更新：1.devMap获取方式改为AdbCommand类的静态方法；devMap = AdbCommand.getDevID()能获取电脑上连接的所有手机的devices id,
+   2.增加DevInformationAssembly类，手机信息合集，通过此类能获取手机的相关信息,以后信息的添加都在此类中封装。注意：minitor的信息如battery info不在此类中
+   3.增加ExecTestFactory类，，此类是执行测试类，构造函数：ExecTestFactory(String userId, String taskName, GregorianCalendar calendar, String serial)
+                                    参数介绍：userId：用户ID，taskName：执行task的名称，calendar：task发起的日期时间；serial：指定执行手机的devices id
+		方法介绍							
+		    public void execTestCaseScript(String devSerial,String scriptPathName,int type);发起执行脚本，Type 测试类型，目前Type=0执行SRR工具，Type=1执行stability测试，其他功能待扩展
+			public File getTestReport();获取report路径
+			public File getTestLog();获取log路径	
+			
+	示例代码：SursoftExample.java

@@ -15,6 +15,7 @@ public class SursoftToolSrrStatus extends Observable{
     public void setSursoftToolSrrStatus(String status){
         if(!status.equals(this.status)){
             this.status = status;
+            AdbCommand.setDevIdStatus(serial,status);
             setChanged();
             notifyObservers();
         }

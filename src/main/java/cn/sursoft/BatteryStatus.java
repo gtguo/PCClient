@@ -15,12 +15,14 @@ class Battery extends Observable{
     private int scale ;
     private double temperature ;
     private double voltage ;
+    private String serial;
 
     public Battery(String devSerial){
-        System.out.println(TAG+"init Battery Status");
+        System.out.println(TAG+devSerial+" init Battery Status");
+        this.serial = devSerial;
         HashMap<String,String> batteryStatus = new AdbCommand().getBatteryStatus(devSerial);
         if(batteryStatus == null){
-            System.out.println(TAG+"initBatteryStatus failed! ");
+            System.out.println(TAG+devSerial+" initBatteryStatus failed! ");
             return;
         }
         setStatus(batteryStatus.get("status"));
@@ -88,7 +90,7 @@ class Battery extends Observable{
                 || !health.equals(this.health)
                 || !sourc.equals(this.source)){
             changedFlag = true;
-            System.out.println(TAG+"Battery Status has changed! ");
+            System.out.println(TAG+serial+" Battery Status has changed! ");
         }
         setStatus(status);
         setHealth(health);

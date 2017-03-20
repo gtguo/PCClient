@@ -49,7 +49,7 @@ public class SocketClient {
         this.connectivityStatus = new ConnectivityStatus(devSerial);
         this.phoneStateStatus = new PhoneStateStatus(devSerial);
         this.sursoftToolSrrStatus = new SursoftToolSrrStatus(devSerial);
-        System.out.println(TAG+"devSerial:"+devSerial+"portId:"+portId);
+        System.out.println(TAG+"devSerial:"+devSerial+" portId:"+portId);
     }
 
     //get private field begin
@@ -205,6 +205,10 @@ public class SocketClient {
         createSocket createSc = new createSocket(getSocket());
         executorService.submit(createSc);
         Thread.sleep(500);
+    }
+
+    public void socketClose() throws IOException {
+        getSocket().close();
     }
 
     class createSocket extends Thread{
